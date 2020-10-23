@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from filmyweb.views import pierwsza_strona, aktualny_czas
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path ('test/', pierwsza_strona), # podanie adresu URL do stron http zdefiniowanych w pliku "views.py"
+
+    path ('czas/', aktualny_czas)
 ]
