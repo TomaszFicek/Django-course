@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>moja pierwsza strona</title>
+</head>
+<body>
+    <h1>Tutaj beda moje filmy</h1> <!-- dodanie nagłowka z napisem na stronie -->
+
+    <a href="https://www.mozilla.org/en-US/about/manifesto/">Mozilla Manifesto</a> <!-- wstawie linku na strone -->
+
+    {% for film in filmy %} <!-- pętla for wypisujaca wszytskie elementy bazy danych (baza danych jest w obiekcie
+     nazwanym "filmy" -->
+        <p>{{ film }}</p>
+    {% endfor %}
+</body>
+</html>

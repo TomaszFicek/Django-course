@@ -1,6 +1,6 @@
 from django.db import models
 
-class Film(models.Model):
+class Film(models.Model): # klasa w ktorej zamieszczomy rozne FIELDS
     tytul = models.CharField(max_length=64, unique=True,)
     rok = models.PositiveSmallIntegerField(default=2000)
     opis = models.TextField(default='')

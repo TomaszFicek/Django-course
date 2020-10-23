@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '*86%o!ln62#au_@+59obtv=r1oyp7^gx@^7l&!xaq!#6hu40n1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
@@ -55,7 +55,7 @@ ROOT_URLCONF = 'Movies.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'], # w tym miescu definiujemy foleder w którym będą sie znajdowaaly templejty
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
