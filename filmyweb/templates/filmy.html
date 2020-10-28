@@ -1,3 +1,4 @@
+{% load static %} <!-- załadowanie plikow statycznych do strony HTML -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,15 +7,28 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>moja pierwsza strona</title>
+    <link rel="stylesheet" href="{% static 'moj.css' %}"> <!-- podlinkowanie stworzonego przez nas pliku statycznego
+     - w tym przypadku pilu "moj.css" -->
 </head>
 <body>
-    <h1>Tutaj beda moje filmy</h1> <!-- dodanie nagłowka z napisem na stronie -->
 
     <a href="https://www.mozilla.org/en-US/about/manifesto/">Mozilla Manifesto</a> <!-- wstawie linku na strone -->
 
-    {% for film in filmy %} <!-- pętla for wypisujaca wszytskie elementy bazy danych (baza danych jest w obiekcie
+    {% if filmy|length == 0 %} <!-- dodawanie warunku w jezyku HTML -->
+        <h2>Brak filmów</h2>
+
+    {% else %}
+
+        <h1>Liczba fimów w bazie danych: {{filmy|length}}</h1> <!-- dodanie nagłowka z napisem na stronie oraz
+         wypisanie liczby fimów które aktualnie znajdują się w bazie danych przy pomocy
+         METODY/SKLADNI "{{filmy|length}}" -->
+        {% for film in filmy %} <!-- pętla for wypisujaca wszytskie elementy bazy danych (baza danych jest w obiekcie
      nazwanym "filmy" -->
-        <p>{{ film }}</p>
-    {% endfor %}
+        <h2>{{ film }}</h2>
+        <p>{{ film.opis }}</p>
+        {% endfor %}
+
+    {% endif %} <!-- zakonczenie warunku w jezyku HTML -->
+
 </body>
 </html>
