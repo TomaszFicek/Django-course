@@ -1,0 +1,13 @@
+
+{% extends 'glowny.html' %} <!-- rozszerzenie tego templejtu o zawartosc templejtu "glowny.html -->
+
+{% block tytul %} Zaloguj {% endblock %} <!-- wyświetlanie tytulu konkretnej strony html -->
+
+
+{% block strona %}
+    <form method="post">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit">Zaloguj</button>
+    </form>
+{% endblock %}

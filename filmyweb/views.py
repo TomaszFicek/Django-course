@@ -1,9 +1,9 @@
-from django.shortcuts import render
-
-from django.http import HttpResponse
-
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Film
 from .forms import MovieForm
+from django.contrib.auth.decorators import login_required # zaimportowanie dekoratora do wymagania logowania sie -
+# wstawiamy ten dekorator przed funkcją, do której chcemy aby dostep mili tylko zalogowani uzytkownicy
+
 
 def pierwsza_strona(request): # definicja funkcji do wyświetlenia strony http
 
@@ -18,6 +18,7 @@ def pierwsza_strona(request): # definicja funkcji do wyświetlenia strony http
     #  z zawartoscią bazy danch (przypisany do zmiennej "wszytskie"), w pliku "filmy.html" wprowadzono skladnię, która
     # przedatawia wyswietlenie tej bazy danych
 
+@login_required() # dodanie dekoratora do poniżej funkcji
 def nowy_film(request):
     form = MovieForm(request.POST or None, request.FILES or None) # przypisanie do zmiennej "form" klasy "MovieForm"
     # za pomocą której są wysyłane dane do bazy danych - przy pomocy "request.POST" są wysyłąne dane do bazy danych,
@@ -25,7 +26,38 @@ def nowy_film(request):
 
     if form.is_valid(): # warunek sprawdzjacy czy powyzej zapisane dane są odpowiednie/dobrego typu jak "fields" w BD
         form.save() # jezeli powyzszy warunek spełniony to dane sa zapisywane do BD
-    return render(request, 'nowy_film.html', {'form': form}) # "Funkcja render() bierze obiekt request jako swój
+        return redirect(pierwsza_strona) # metoda "redirect" pozwala na przejście do funkcji podanej w argumencie - w
+        # praktyce to będzie tak wyglądało, że jeżeli "form" jest poprawny, zostanie on zapisany a potem metoda
+        # "redirect" zabierze nas na stronę ze wszystkimi filmami
+
+    return render(request, 'film_form.html', {'form': form}) # "Funkcja render() bierze obiekt request jako swój
     #  pierwszy argument, nazwę szablonu jako drugi argument i słownik jako swój opcjonalny trzeci argument. Zwraca
     #  obiekt HttpResponse danego szablonu wyrenderowany z danym kontekstem - czyli ponownie wracamy do strony z
     #  formularzem "nowy_film.http"
+
+@login_required()
+def edytuj_film(request, id): #definicja funkcji do edytowania filmu - w argumencie podajemy id filmu który chcemy edyto
+    film = get_object_or_404(Film, pk=id) # do zmiennej "fil" przypsujemy metodę do pobierania objektu (filmu) z bazy
+    # danych -  w przypadku podania filmu,który nie istnieje, metoda ta wyrzuca błąd 404
+
+    # gdy do zmiennej "film" został przypisany obiekt/film, który będzie edytowany - można zastosować skrypt, który był
+    # używany tworzenia nowych rekordów w bazie danych ( skrypt z funkcji "nowy"film"), z takim wyjątkiem, ze należy
+    # dopisać w parametrze zmienną "film" do której przypisany jest wybrany film do edycji
+
+    form = MovieForm(request.POST or None, request.FILES or None, instance=film)
+
+    if form.is_valid():
+        form.save()
+        return redirect(pierwsza_strona)
+
+    return render(request, 'film_form.html', {'form': form})
+
+@login_required()
+def usun_film(request, id): #definicja funkcji do edytowania filmu - w argumencie podajemy id filmu który chcemy edyto
+    film = get_object_or_404(Film, pk=id)
+
+    if request.method == "POST":
+        film.delete()
+        return redirect(pierwsza_strona)
+
+    return render(request, 'potwierdz.html', {'film': film})

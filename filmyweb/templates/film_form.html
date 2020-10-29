@@ -1,21 +1,17 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
 
+{% extends 'glowny.html' %} <!-- rozszerzenie tego templejtu o zawartosc templejtu "glowny.html -->
+
+{% block tytul %} Formularz {% endblock %} <!-- wyświetlanie tytulu konkretnej strony html -->
+
+
+{% block strona %}
     <form method="post" enctype="multipart/form-data"> <!-- dodawanie formularza do wysułania danych w html -->
         {% csrf_token %} <!-- token pozwalający na zaniedbanie CSRF (Cross Site Request Forgery) -"ataku" na naszą
          stronę, podczas zapisywania nowego filmu w formularzu -->
         {{ form }} <!-- odwołanie się do funkcji "nowy_film" z pliku "views.py" -->
         <button type="submit">dodaj film</button> <!-- dodanie na stronie pryzcisku nazwanego "dodaj film" -->
-
     </form>
 
-</body>
-</html>
+    <a href="{% url 'pierwsza_strona' %}"> <button type="submit"> Codnij do Wszytskie filmy</button>  </a>
+
+{% endblock %}

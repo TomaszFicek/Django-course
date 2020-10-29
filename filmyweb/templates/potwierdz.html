@@ -1,0 +1,15 @@
+
+{% extends 'glowny.html' %} <!-- rozszerzenie tego templejtu o zawartosc templejtu "glowny.html -->
+
+{% block tytul %} potwierdzenie {% endblock %} <!-- wyświetlanie tytulu konkretnej strony html -->
+
+
+{% block strona %}
+    <h1> Czy na pewno chcesz usunąć film {{ film.tytul }} </h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Usun film  </button>
+    </form>
+    <a href="{% url 'pierwsza_strona' %}"> <button type="submit"> Codnij do Wszytskie filmy</button>  </a>
+{% endblock %}

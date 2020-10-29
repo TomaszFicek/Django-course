@@ -123,3 +123,7 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = 'moje_media'
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'pierwsza_strona' # zrobienie przekierpwania na strone z filmami po poprawnym zalogowaniu się
+LOGOUT_REDIRECT_URL = 'pierwsza_strona' # przejście do strony logowaniu po procesie wylogowania

@@ -1,18 +1,21 @@
-{% load static %} <!-- załadowanie plikow statycznych do strony HTML -->
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>moja pierwsza strona</title>
-    <link rel="stylesheet" href="{% static 'moj.css' %}"> <!-- podlinkowanie stworzonego przez nas pliku statycznego
-     - w tym przypadku pilu "moj.css" -->
-</head>
-<body>
 
-    <a href="https://www.mozilla.org/en-US/about/manifesto/">Mozilla Manifesto</a> <!-- wstawie linku na strone -->
+{% extends 'glowny.html' %} <!-- rozszerzenie tego templejtu o zawartosc templejtu "glowny.html -->
+
+{% block tytul %} Lista fimów {% endblock %} <!-- wyświetlanie tytulu konkretnej strony html -->
+
+
+{% block strona %}
+    {% if user.is_authenticated %} <!-- sprawdzenie warunku czy uzytkownik jest zalogowany, jesli nie jest wyswitla się
+     przycisk do zalogowania , a jesli jest to przycisk do wylogowania-->
+        <p>Witaj {{ user.username }} <br> </p> <!-- wyswietlenie napisu plus wyswietlenie nazwy uzytkownika (<br> jest
+         to przejscie do koejnej lini )-->
+        <a href="{% url 'logout'%}"> <button type="submit">Logout</button>  </a>
+    {% else %}
+        <a href="{% url 'login'%}"> <button type="submit">Login</button>  </a>
+    {% endif %}
+    <hr>
+
+    <a href="{% url 'nowy_film'%}"> <button type="submit">Dodaj nowy film</button>  </a>
 
     {% if filmy|length == 0 %} <!-- dodawanie warunku w jezyku HTML -->
         <h2>Brak filmów</h2>
@@ -26,9 +29,13 @@
      nazwanym "filmy" -->
         <h2>{{ film }}</h2>
         <p>{{ film.opis }}</p>
+        <a href="{% url 'edytuj_film' film.id %}"> <button type="submit">Edytuj film "{{film.tytul}}"</button>  </a>
+        <!-- powyżej przy pomocy "<a></a> utworzono link do funkcji "edytuj_film", do zmiennej "herf" przypisano
+         nazwe URL tej funkcji, oraz dynamicznie podaje się id filmu, który chcemy edytowac - następnie ten link
+          podpęto pod przycisk -->
+        <a href="{% url 'usun_film' film.id %}"> <button type="submit">Usun film "{{film.tytul}}"</button>  </a>
         {% endfor %}
 
     {% endif %} <!-- zakonczenie warunku w jezyku HTML -->
 
-</body>
-</html>
+{% endblock %}
