@@ -2,13 +2,15 @@
 {% extends 'glowny.html' %} <!-- rozszerzenie tego templejtu o zawartosc templejtu "glowny.html -->
 
 {% block tytul %} Formularz {% endblock %} <!-- wyświetlanie tytulu konkretnej strony html -->
+{% load bootstrap %} <!-- zaladowanie apki bootstrap do templejtu -->
+
 
 
 {% block strona %}
     <form method="post" enctype="multipart/form-data"> <!-- dodawanie formularza do wysułania danych w html -->
         {% csrf_token %} <!-- token pozwalający na zaniedbanie CSRF (Cross Site Request Forgery) -"ataku" na naszą
          stronę, podczas zapisywania nowego filmu w formularzu -->
-        {{ form }} <!-- odwołanie się do funkcji "nowy_film" z pliku "views.py" -->
+        {{ form|bootstrap }} <!-- odwołanie się do funkcji "nowy_film" z pliku "views.py" -->
         <button type="submit">dodaj film</button> <!-- dodanie na stronie pryzcisku nazwanego "dodaj film" -->
     </form>
 

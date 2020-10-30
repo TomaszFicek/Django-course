@@ -1,13 +1,19 @@
-
 {% extends 'glowny.html' %} <!-- rozszerzenie tego templejtu o zawartosc templejtu "glowny.html -->
+{% load bootstrap %} <!-- zaladowanie apki bootstrap do templejtu -->
 
 {% block tytul %} Zaloguj {% endblock %} <!-- wyświetlanie tytulu konkretnej strony html -->
 
-
 {% block strona %}
-    <form method="post">
-        {% csrf_token %}
-        {{form}}
-        <button type="submit">Zaloguj</button>
-    </form>
+
+    <div class="card" style="width: 15rem;">
+      <div class="card-body">
+        <h5 class="card-title">Zaloguj się</h5>
+          <form method="post">
+            {% csrf_token %}
+            {{ form|bootstrap }} <!-- aby formularz działał z apką bootstram nalezy zastoswac taka składnie -->
+            <button type="submit" class="btn btn-success">Zaloguj <i class="fas fa-sign-in-alt"></i></button>
+          </form>
+
+      </div>
+    </div>
 {% endblock %}

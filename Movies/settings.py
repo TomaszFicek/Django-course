@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrapform', # dodanie zainstaowanej appki do stylizowania formularzy Django - "django bootstrap form"
     'filmyweb'
 ]
 
