@@ -1,21 +1,27 @@
-
 {% extends 'glowny.html' %} <!-- rozszerzenie tego templejtu o zawartosc templejtu "glowny.html -->
 
 {% block tytul %} Lista fimów {% endblock %} <!-- wyświetlanie tytulu konkretnej strony html -->
+{% load bootstrap %} <!-- zaladowanie apki bootstrap do templejtu -->
 
 
 {% block strona %}
-    {% if user.is_authenticated %} <!-- sprawdzenie warunku czy uzytkownik jest zalogowany, jesli nie jest wyswitla się
+
+    <div class="jumbotron">
+        {% if user.is_authenticated %} <!-- sprawdzenie warunku czy uzytkownik jest zalogowany, jesli nie jest wyswitla się
      przycisk do zalogowania , a jesli jest to przycisk do wylogowania-->
-        <p>Witaj {{ user.username }} <br> </p> <!-- wyswietlenie napisu plus wyswietlenie nazwy uzytkownika (<br> jest
-         to przejscie do koejnej lini )-->
-        <a href="{% url 'logout'%}"> <button type="submit">Logout</button>  </a>
-    {% else %}
-        <a href="{% url 'login'%}"> <button type="submit">Login</button>  </a>
-    {% endif %}
+            <h1 class="display-4">Witaj {{ user.username }}</h1>
+            <a href="{% url 'logout'%}"> <button type="submit">Logout</button>  </a>
+        {% else %}
+            <a href="{% url 'login'%}"> <button type="submit" class="btn btn-success">Zaloguj
+            <i class="fas fa-sign-in-alt"></i></button>  </a>
+        {% endif %}
+      <hr class="my-4">
+    </div>
+
     <hr>
 
-    <a href="{% url 'nowy_film'%}"> <button type="submit">Dodaj nowy film</button>  </a>
+    <a href="{% url 'nowy_film'%}"> <button type="submit" class="btn btn-primary">Dodaj nowy film<br>
+    <i class="fas fa-plus-circle"></i></button>  </a>
 
     {% if filmy|length == 0 %} <!-- dodawanie warunku w jezyku HTML -->
         <h2>Brak filmów</h2>
@@ -27,13 +33,31 @@
          METODY/SKLADNI "{{filmy|length}}" -->
         {% for film in filmy %} <!-- pętla for wypisujaca wszytskie elementy bazy danych (baza danych jest w obiekcie
      nazwanym "filmy" -->
-        <h2>{{ film }}</h2>
-        <p>{{ film.opis }}</p>
-        <a href="{% url 'edytuj_film' film.id %}"> <button type="submit">Edytuj film "{{film.tytul}}"</button>  </a>
-        <!-- powyżej przy pomocy "<a></a> utworzono link do funkcji "edytuj_film", do zmiennej "herf" przypisano
-         nazwe URL tej funkcji, oraz dynamicznie podaje się id filmu, który chcemy edytowac - następnie ten link
-          podpęto pod przycisk -->
-        <a href="{% url 'usun_film' film.id %}"> <button type="submit">Usun film "{{film.tytul}}"</button>  </a>
+        <div class="card" style="width: 40rem;">
+          <div class="card-body">
+
+              <div class="row">
+                  <div class="col-9">
+                    <h5 class="card-title">{{ film }}</h5>
+                  </div>
+                  <div class="col-3">
+                     <a href="{% url 'edytuj_film' film.id %}"> <button type="submit">
+                         <i class="far fa-2x fa-edit"></i></button>  </a>
+                      <!-- powyżej przy pomocy "<a></a> utworzono link do funkcji "edytuj_film", do zmiennej "herf" przypisano
+                      nazwe URL tej funkcji, oraz dynamicznie podaje się id filmu, który chcemy edytowac - następnie ten link
+                      podpęto pod przycisk -->
+                      <a href="{% url 'usun_film' film.id %}"> <button type="submit">
+                          <i class="fas fa-2x fa-trash-alt"></i></button>  </a>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col">
+                    <p class="card-text">{{ film.opis }}</p>
+                  </div>
+
+          </div>
+        </div>
+
         {% endfor %}
 
     {% endif %} <!-- zakonczenie warunku w jezyku HTML -->
