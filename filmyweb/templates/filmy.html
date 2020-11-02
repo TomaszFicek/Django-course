@@ -8,19 +8,20 @@
 
     <div class="jumbotron">
         {% if user.is_authenticated %} <!-- sprawdzenie warunku czy uzytkownik jest zalogowany, jesli nie jest wyswitla się
-     przycisk do zalogowania , a jesli jest to przycisk do wylogowania-->
-            <h1 class="display-4">Witaj {{ user.username }}</h1>
-            <a href="{% url 'logout'%}"> <button type="submit">Logout</button>  </a>
+        przycisk do zalogowania , a jesli jest to przycisk do wylogowania-->
+            <h1 class="display-4">Witaj {{ user.username.capitalize }}</h1>
+            <a href="{% url 'logout'%}" class="przyciski"> <button type="submit" class="btn btn-warning">Wyloguj
+            <i class="fas fa-sign-out-alt"> </i></button> </a>
         {% else %}
-            <a href="{% url 'login'%}"> <button type="submit" class="btn btn-success">Zaloguj
-            <i class="fas fa-sign-in-alt"></i></button>  </a>
+            <a href="{% url 'login'%}" class="przyciski"> <button type="submit" class="btn btn-success">Zaloguj
+            <i class="fas fa-sign-in-alt"></i></button>  </a> <!-- stworzenie class "przyciski" służy do ustawienia
+              (położenia, wyglądu) przycisków zaloguj i wyloguj za pomocą pliku "moj.css" -->
         {% endif %}
       <hr class="my-4">
     </div>
 
-    <hr>
 
-    <a href="{% url 'nowy_film'%}"> <button type="submit" class="btn btn-primary">Dodaj nowy film<br>
+    <a href="{% url 'nowy_film' %}"> <button type="submit" class="btn btn-primary">Dodaj nowy film<br>
     <i class="fas fa-plus-circle"></i></button>  </a>
 
     {% if filmy|length == 0 %} <!-- dodawanie warunku w jezyku HTML -->
@@ -32,10 +33,11 @@
          wypisanie liczby fimów które aktualnie znajdują się w bazie danych przy pomocy
          METODY/SKLADNI "{{filmy|length}}" -->
         {% for film in filmy %} <!-- pętla for wypisujaca wszytskie elementy bazy danych (baza danych jest w obiekcie
-     nazwanym "filmy" -->
-        <div class="card" style="width: 40rem;">
+         nazwanym "filmy" -->
+        <div class="card" style="width: 50rem;">
           <div class="card-body">
 
+              <img src="/media/{{ film.plakat }}" class="film-plakaty"/>
               <div class="row">
                   <div class="col-9">
                     <h5 class="card-title">{{ film }}</h5>
@@ -55,8 +57,10 @@
                     <p class="card-text">{{ film.opis }}</p>
                   </div>
 
+              </div>
           </div>
         </div>
+
 
         {% endfor %}
 

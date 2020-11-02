@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Film
+from .models import Film, DodatkoweInfo, Ocena
 
 # admin.site.register(Film) # rejestracja (zamieszczenie w aplikacji "filmyweb") utworzonych w pliku "models.py",
 # w class "Film", st    worzonych tam wszytskich FIELDS
@@ -14,4 +14,6 @@ class FilmAdmin(admin.ModelAdmin):
     list_filter = ["rok"] # wstawianie mozliwosci filtrowania listy po FIELDS zamieszczonym w nawiasie
     search_fields = ["tytul", "opis"] # wstawenie mozliwosci wyszukiwania w liscie fimów po FIELDS zamieszczonych w []
 
-
+admin.site.register(DodatkoweInfo) # rejestracja (zamieszczenie w aplikacji "filmyweb") utworzonych w pliku "models.py",
+# w class "DodatkoweInfo", stworzonych tam wszytskich FIELDS
+admin.site.register(Ocena)

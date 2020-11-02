@@ -7,13 +7,28 @@
 
 
 {% block strona %}
-    <form method="post" enctype="multipart/form-data"> <!-- dodawanie formularza do wysułania danych w html -->
-        {% csrf_token %} <!-- token pozwalający na zaniedbanie CSRF (Cross Site Request Forgery) -"ataku" na naszą
-         stronę, podczas zapisywania nowego filmu w formularzu -->
-        {{ form|bootstrap }} <!-- odwołanie się do funkcji "nowy_film" z pliku "views.py" -->
-        <button type="submit">dodaj film</button> <!-- dodanie na stronie pryzcisku nazwanego "dodaj film" -->
-    </form>
 
-    <a href="{% url 'pierwsza_strona' %}"> <button type="submit"> Codnij do Wszytskie filmy</button>  </a>
+        <div class="card" style="width: 32rem;">
+            <div class="card-body">
+                <h5 class="card-title">Film form</h5>
+                <form method="post" enctype="multipart/form-data"> <!-- dodawanie formularza do wysułania danych w html -->
+                {% csrf_token %} <!-- token pozwalający na zaniedbanie CSRF (Cross Site Request Forgery) -"ataku" na naszą
+                stronę, podczas zapisywania nowego filmu w formularzu -->
+                {{ form|bootstrap }} <!-- odwołanie się do funkcji "nowy_film" z pliku "views.py" -->
+                {% if nowy == True %}
+                    <button type="submit" class="btn btn-success" >Dodaj film <i class="fas fa-plus"></i></button> <!--
+                    dodanie na stronie pryzcisku nazwanego "dodaj film" -->
+                {% else %}
+                    <button type="submit" class="btn btn-success" >Edytuj film <i class="fas fa-edit"></i></button>
+                {% endif %}
+
+                </form>
+
+                <a href="{% url 'pierwsza_strona' %}"> <button type="submit" class="btn btn-info"> Codnij do Wszytskie filmy
+                <i class="fas fa-chevron-circle-left"></i></button>  </a>
+
+            </div>
+         </div>
+
 
 {% endblock %}

@@ -30,8 +30,10 @@ def nowy_film(request):
         # praktyce to będzie tak wyglądało, że jeżeli "form" jest poprawny, zostanie on zapisany a potem metoda
         # "redirect" zabierze nas na stronę ze wszystkimi filmami
 
-    return render(request, 'film_form.html', {'form': form}) # "Funkcja render() bierze obiekt request jako swój
-    #  pierwszy argument, nazwę szablonu jako drugi argument i słownik jako swój opcjonalny trzeci argument. Zwraca
+    return render(request, 'film_form.html', {'form': form, 'nowy': True}) # "Funkcja render() bierze obiekt request jako swój
+    #  pierwszy argument, nazwę szablonu jako drugi argument i słownik jako swój opcjonalny trzeci argument ( w
+    # słowniku wstawiamy argumenty przesyłane do szablonu "film_form.html" - parametr "nowy" słyży do sprawdzania
+    # czy dodajemy nowy film czy edytujemy instniejący za pomocą jednego szablonu "film_form". Zwraca
     #  obiekt HttpResponse danego szablonu wyrenderowany z danym kontekstem - czyli ponownie wracamy do strony z
     #  formularzem "nowy_film.http"
 
@@ -50,7 +52,7 @@ def edytuj_film(request, id): #definicja funkcji do edytowania filmu - w argumen
         form.save()
         return redirect(pierwsza_strona)
 
-    return render(request, 'film_form.html', {'form': form})
+    return render(request, 'film_form.html', {'form': form, 'nowy': False})
 
 @login_required()
 def usun_film(request, id): #definicja funkcji do edytowania filmu - w argumencie podajemy id filmu który chcemy edyto
